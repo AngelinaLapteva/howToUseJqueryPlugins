@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jQuery Gallery</title>
+  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="fancybox/jquery.fancybox.css">
+</head>
+<body>
+  <div class="container clearfix">
+    <div class="gallery">
+      <h1>jQuery Gallery</h1>
+
+      <div class="previews">
+          <a href="#" class="selected" data-full="images/dogs/dog1large.jpg">
+          <img src="images/dogs/dog1small.jpg" /></a>
+          <a href="#" data-full="images/dogs/dog2large.jpg"><img src="images/dogs/dog2small.jpg" /></a>
+          <a href="#" data-full="images/dogs/dog3large.jpg"><img src="images/dogs/dog3small.jpg" /></a>
+          <a href="#" data-full="images/dogs/dog4large.jpg"><img src="images/dogs/dog4small.jpg" /></a>
+          <a href="#" data-full="images/dogs/dog5large.jpg"><img src="images/dogs/dog5small.jpg" /></a>
+      </div>
+
+      <div class="full">
+          <!-- first image is viewable to start -->
+          <img src="images/dogs/dog1large.jpg" />
+      </div>
+
+    </div>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="fancybox/jquery.fancybox.js?v=2.1.4"></script>
+  <script>
+    // listen for a click on .previews a
+    $('.previews a').on('click', myFunction);
+
+    function myFunction(e) {
+// stop the jum to the top of the page when you click an epty <a href="#"
+      e.preventDefault();
+      var newSrc = this.dataset.full;
+     $('.selected').removeClass('selected');
+      $(this).addClass('selected');
+// to make first fadeout previous element in the same div you need to create a callBack function, in this case it first implementing fadeOut and then grab the function inside of fadeOut=> which is first change the img and hten fade in
+      $('.full img').fadeOut( function fading(){ // first it fade out the one which is in div "full" 
+         $('.full img').attr('src',`${newSrc}`);//and then it change the source of the image
+         $('.full img').fadeIn();
+      });
+
+      $('.full img').on ('click', myFunction2)
+     function myFunction2(){
+     $('.full img').fancybox({
+            'autoScale': true,
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'speedIn': 500,
+            'speedOut': 300,
+            
+        });
+   }
+    }
+  </script>
+</body>
+</html>
